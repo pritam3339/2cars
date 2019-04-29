@@ -5,6 +5,11 @@ var highscore = 0;
 var car1, car2, timer, objTimer,
     obstacles = [],
     score = 0;
+var feedbacks = ["Good job! I hope you do even better next time", 
+				"Kudos to your concentration, Boy. Keep it up",
+				"Congrats, you've killed it"];
+var startTime, endTime;
+var addScore = true;
 
 function Car(type) {
     this.y = 3 * canvas.height / 4;
@@ -191,6 +196,7 @@ function init() {
 
     clear();
     score = 0;
+    startTime = new Date();
     obstacles = [];
     $("#canvas").css('opacity', 1);
     car1 = new Car('blue');
@@ -221,7 +227,19 @@ function stop() {
     pre();
 
     $("#highscore").text("Highscore: " + highscore);
+    //score
+    if(addScore) score += 10;
     $("#score").text("Score: " + score);
+
+    //feedback
+    var feedback = feedbacks[Math.floor(Math.random()*feedbacks.length)];
+    $("#feedback").text(feedback);
+
+    //time
+    endTime = new Date();
+    var time = (endTime - startTime)/1000;
+    $("#time").text("time spent: " + time + " seconds");
+    
     $("#board").fadeIn(500);
 }
 
